@@ -1,6 +1,7 @@
 $(function() {
     var $source = $('#source');
     var $base = $('#base');
+    var $drawButton = $("#draw_button");
     new resizebar('#rb', '#edit', "v", 1);
     var mag = 1.0;
     $base.css('width', "2900px").css('height',"2000px");
@@ -37,11 +38,22 @@ $(function() {
     }
 
     $source.on('keyup',function(){
-        var s = $(this).val();
+        //var s = $(this).val();
+        //data = b.parse(s);
+        //b.setobj(data);
+        //savelocal({"source":s, "fname":$('#i_fname').val()});
+    });
+    $drawButton.on('click', function(){
+        var s = $source.val();
         data = b.parse(s);
         b.setobj(data);
-        savelocal({"source":s, "fname":$('#i_fname').val()});
-    })
+        savelocal({
+            "source": s,
+            "fname": $('#i_fname').val()
+        });
+    });
+    
+    
     $(document).on("dragstart", '#base .box',function(ev){
         var oe = ev.originalEvent;
         ev.originalEvent.dataTransfer.setData("text", $(this).attr('id') + "/" + oe.pageX + "/" + oe.pageY);

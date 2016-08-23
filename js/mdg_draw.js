@@ -43,10 +43,13 @@ var mdg_draw = function(_base) {
     function round(x) { return Math.floor(x*10)/10; }
     // create dom block 
     this.create = function(editable,box) {
-        var d = editable?"true":"false" ;
-        var type,inner ;
+        var d = editable ? "true" : "false";
+        var type;
+        var inner;
         if(typeof box.inner == "object" || box.title != null){
-            if(typeof box.inner != "object"){ box.inner = [box.inner]; }
+            if(typeof box.inner != "object"){
+                box.inner = [box.inner];
+            }
             for(var tr in box.inner){
                 var tt = box.inner[tr].split(" | ") ;
                 if(tt.length>1){
@@ -55,14 +58,14 @@ var mdg_draw = function(_base) {
             }
             type = "<table>" ;
             inner = "<tr><td>" + box.inner.join("</td></tr><tr><td>") + "</td></tr>";
-            if(box.title!=null){
+            if(box.title != null){
                 inner = "<tr><th>" + box.title + "</th></tr>" + inner;
             }
         } else {
-            type = "<div>" ;
+            type = "<div>";
             inner = box.inner ;
         }
-        var pos = box.pos ;
+        var pos = box.pos;
         if(pos == undefined){
             pos = lp;
         }
@@ -103,7 +106,9 @@ var mdg_draw = function(_base) {
                     vx = 1;
                 }
                 var tn = RegExp.$2 - 1;
+                console.log(t[tn]);
                 py = sy + t[tn].offsetTop + t[tn].offsetHeight / 2;
+                console.log(py);
             } else if(d.length > 0 && f.match(/(u|d)([0-9]+)/)) {
                 vx = 0;
                 if(RegExp.$1 == "u"){
