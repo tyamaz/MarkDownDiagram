@@ -53,12 +53,20 @@ $(function() {
         });
     });
     
+    $(document).on("click", function(ev){
+        console.log($(ev.target).parent().parent().parent().attr("id"));
+        var targetId = $(ev.target).parent().parent().parent().attr("id");
+        var position = $source.val().indexOf(targetId);
+        $source[0].selectionStart = position;
+        $source[0].selectionEnd = position;
+        $source.trigger("blur").trigger("focus");
+    });
     
-    $(document).on("dragstart", '#base .box',function(ev){
+    $(document).on("dragstart", '#base .box', function(ev){
         var oe = ev.originalEvent;
         ev.originalEvent.dataTransfer.setData("text", $(this).attr('id') + "/" + oe.pageX + "/" + oe.pageY);
     })
-    $base.on("dragenter dragover",function(){
+    $base.on("dragenter dragover", function(){
         return false;
     }).on("drop",function(ev){
         var oe = ev.originalEvent;
