@@ -1,24 +1,25 @@
 $(function() {
+    var $source = $('#source');
+    var $base = $('#base');
     new resizebar('#rb', '#edit', "v", 1);
     var mag = 1.0;
-    $('#base').css('width',"2900px").css('height',"2000px");
+    $base.css('width', "2900px").css('height',"2000px");
 
     $('#zoom').on("input",function(){
         mag = $(this).val() / 100;
         $('#szoom').html("#base {transform: scale(" + mag + ")}");
     })
     $('#size_x,#size_y').on('change',function(ev){
-        $('#base').css(($(this).attr('id')=="size_x") ? 'width' : 'height', parseInt($(this).val()) + "px");
+        $base.css(($(this).attr('id') == "size_x") ? 'width' : 'height', parseInt($(this).val()) + "px");
     })
 
-
-    var b = new mdg_draw($('#base'));
+    var b = new mdg_draw($base);
     var p = loadlocal() ;
     if(p){
-        $('#source').val(p.source);
+        $source.val(p.source);
         $('#i_fname').val(p.fname);
     }
-    var data = b.parse($('#source').val());
+    var data = b.parse($source.val());
     b.setobj(data,true);
 
     function loadlocal(){
@@ -35,17 +36,17 @@ $(function() {
         window.localStorage.setItem("mdg",JSON.stringify({sources:[s]}));
     }
 
-    $('#source').on('keyup',function(){
+    $source.on('keyup',function(){
         var s = $(this).val();
         data = b.parse(s);
         b.setobj(data);
-        savelocal({"source":s,"fname":$('#i_fname').val()});
+        savelocal({"source":s, "fname":$('#i_fname').val()});
     })
-    $(document).on("dragstart",'#base .box',function(ev){
+    $(document).on("dragstart", '#base .box',function(ev){
         var oe = ev.originalEvent;
         ev.originalEvent.dataTransfer.setData("text", $(this).attr('id') + "/" + oe.pageX + "/" + oe.pageY);
     })
-    $('#base').on("dragenter dragover",function(){
+    $base.on("dragenter dragover",function(){
         return false;
     }).on("drop",function(ev){
         var oe = ev.originalEvent;
@@ -63,8 +64,8 @@ $(function() {
 
         b.setpos(id,px,py);
         b.redraw(data);
-        var s = b.upd_text($('#source').val());
-        $('#source').val(s) ;
+        var s = b.upd_text($source.val());
+        $source.val(s) ;
         savelocal({"source": s, "fname": $('#i_fname').val()});
         return false;
     })
