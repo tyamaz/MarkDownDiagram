@@ -53,10 +53,12 @@ $(function() {
         });
     });
     
-    $(document).on("click", function(ev){
-        console.log($(ev.target).parent().parent().parent().attr("id"));
-        var targetId = $(ev.target).parent().parent().parent().attr("id");
-        var position = $source.val().indexOf(targetId);
+    $base.on("click", function(ev){
+        var target = $(ev.target).parent().parent().parent();
+        if(target[0].tagName != "TABLE"){
+            return;
+        }
+        var position = $source.val().indexOf(target.attr("id"));
         $source[0].selectionStart = position;
         $source[0].selectionEnd = position;
         $source.trigger("blur").trigger("focus");
