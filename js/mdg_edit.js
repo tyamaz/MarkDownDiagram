@@ -58,12 +58,17 @@ $(function() {
         if(target[0].tagName != "TABLE"){
             return;
         }
-        var position = $source.val().indexOf(target.attr("id"));
+        var position = $source.val().indexOf("\n[" + target.attr("id")) + 1;
         $source[0].selectionStart = position;
         $source[0].selectionEnd = position;
         $source.trigger("blur").trigger("focus");
     });
     
+    $base.on("dragstart", function(){
+    }).on("dragenter dragover", function(){
+        
+    }).on("drop", function(){
+    });
     $(document).on("dragstart", '#base .box', function(ev){
         var oe = ev.originalEvent;
         ev.originalEvent.dataTransfer.setData("text", $(this).attr('id') + "/" + oe.pageX + "/" + oe.pageY);
